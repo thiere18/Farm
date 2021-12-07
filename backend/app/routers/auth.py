@@ -9,6 +9,6 @@ from app.models import users as models
 router = APIRouter(tags=['Authentication'])
 
 
-@router.post('/login', response_model=schemas.Token)
+@router.post('/token', response_model=schemas.Token)
 def login(user_credentials: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(database.get_db)):
     return auth_repository.login(user_credentials, db)
