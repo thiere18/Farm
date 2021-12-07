@@ -1,10 +1,9 @@
 from typing import Any, List
-from fastapi import FastAPI, Response, status, HTTPException, Depends, APIRouter
+from fastapi import  status, HTTPException, Depends, APIRouter
 from sqlalchemy.orm import Session
 from .. import  utils,oauth2
 from app.models import users as models
 from app.schemas import user as schemas
-from ..database import get_db
 
 
 
@@ -77,18 +76,11 @@ def get_all_users(db: Session )->Any:
 
     return user
 
-def get_me(db: Session ,current_user: int =Depends(oauth2.get_current_user))->Any:
-    """Return my information
+def get_me(db: Session , current_user:int)->Any:
+    user= db.query(models.User).filter(models.User.id==current_user.id).first()
+    if not user:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND ,detail=" no user for now")
+    
+    return user
 
-    Args:
-        db (Session, optional): [description]. Defaults to Depends(get_db).
-        current_user (int, optional): [description]. Defaults to Depends(oauth2.get_current_user).
 
-    Returns:
-        Any: [description]
-    """
-    return current_user
-
-# update me
-
-#
