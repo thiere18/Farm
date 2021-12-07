@@ -6,7 +6,7 @@ from sqlalchemy.orm import relationship
 from app.database import Base
 
 if TYPE_CHECKING:
-    from .user import User  # noqa: F401
+    from .users import User  # noqa: F401
 
 
 class Item(Base):
