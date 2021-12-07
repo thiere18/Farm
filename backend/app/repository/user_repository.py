@@ -2,8 +2,8 @@ from typing import Any, List
 from fastapi import FastAPI, Response, status, HTTPException, Depends, APIRouter
 from sqlalchemy.orm import Session
 from .. import  utils,oauth2
-from app.models import users
-from app.schemas import user
+from app.models import users as models
+from app.schemas import user as schemas
 from ..database import get_db
 
 
@@ -12,7 +12,7 @@ from ..database import get_db
 # /users
 
 
-def create_user(user: user.UserCreate, db: Session )->Any:
+def create_user(user: schemas.UserCreate, db: Session )->Any:
     """Register new user
 
     Args:
@@ -27,7 +27,7 @@ def create_user(user: user.UserCreate, db: Session )->Any:
     hashed_password = utils.hash(user.password)
     user.password = hashed_password
 
-    new_user = users.User(**user.dict())
+    new_user = models.User(**user.dict())
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
@@ -49,7 +49,7 @@ def get_one_user(id: int, db: Session )->Any:
     Returns:
         Any: [description]
     """
-    user = db.query(users.User).filter(users.User.id == id).first()
+    user = db.query(models.User).filter(models.User.id == id).first()
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"User with id: {id} does not exist")
@@ -58,7 +58,7 @@ def get_one_user(id: int, db: Session )->Any:
 
   
 def get_all_users(db: Session )->Any:
-    """Get all users
+    """Get all models
 
     Args:
         db (Session, optional): [description]. Defaults to Depends(get_db).
@@ -70,7 +70,7 @@ def get_all_users(db: Session )->Any:
     Returns:
         Any: [description]
     """
-    user = db.query(users.User).all()
+    user = db.query(models.User).all()
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=" no user for now")

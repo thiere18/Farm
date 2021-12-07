@@ -1,16 +1,15 @@
 
-from typing import TYPE_CHECKING
 
 from sqlalchemy import Boolean, Column, Integer, String
 from sqlalchemy.orm import relationship
 
 from app.database import Base
 
-if TYPE_CHECKING:
-    from .users import User  # noqa: F401
+
 
 
 class User(Base):
+
     id = Column(Integer, primary_key=True, index=True)
     full_name = Column(String, index=True)
     email = Column(String, unique=True, index=True, nullable=False)

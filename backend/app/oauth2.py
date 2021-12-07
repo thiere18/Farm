@@ -1,9 +1,12 @@
 from jose import JWTError, jwt
 from datetime import datetime, timedelta
-from . import schemas, database, models
+from . import database,utils
 from fastapi import Depends, status, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
+from app.models import users  as models
+from app.schemas import user,token as schemas
+
 from .config import settings
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl='login')
@@ -36,7 +39,7 @@ def verify_access_token(token: str, credentials_exception):
         id: str = payload.get("user_id")
         if id is None:
             raise credentials_exception
-        token_data = schemas.TokenData(id=id)
+        token_data =schemas.TokenPayload(id=id)
     except JWTError:
         raise credentials_exception
 
@@ -52,3 +55,23 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     user = db.query(models.User).filter(models.User.id == token.id).first()
 
     return user
+
+def get_current_active_user(
+    current_user: models.User = Depends(get_current_user),
+) -> models.User:
+    if not utils.is_active(current_user):
+        raise HTTPException(status_code=400, detail="Inactive user")
+    return current_user
+
+
+def get_current_active_superuser(
+    current_user: models.User = Depends(get_current_user),
+) -> models.User:
+    if not utils.is_superuser(current_user):
+        raise HTTPException(
+            status_code=400, detail="The user doesn't have enough privileges"
+        )
+    return current_user
+
+
+

@@ -1,12 +1,9 @@
-from typing import TYPE_CHECKING
 
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 
 from app.database import Base
 
-if TYPE_CHECKING:
-    from .users import User  # noqa: F401
 
 
 class Item(Base):
