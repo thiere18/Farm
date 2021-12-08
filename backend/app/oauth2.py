@@ -9,7 +9,7 @@ from app.schemas import user,token as schemas
 
 from .config import settings
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl='login')
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl='token')
 
 # SECRET_KEY
 # Algorithm
