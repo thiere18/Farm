@@ -6,7 +6,14 @@ from .database import engine
 from .routers import  user, auth
 # models.Base.metadata.create_all(bind=engine)
 
-app = FastAPI()
+app = FastAPI(
+        docs_url="/api/v1/docs",
+    redoc_url="/api/v1/redoc",
+    title="Upwork-user management API",
+    description="MTP API documentation ",
+    version="2.0",
+    openapi_url="/api/v1/openapi.json"
+)
 
 origins = ["*"]
 
@@ -24,4 +31,8 @@ app.include_router(user.router)
 
 @app.get("/")
 def root():
-    return {"message": "Hello World pushing out to ubuntu"}
+    return {"message": "Hello World",
+            "openapiapi documentation url":"/api/v1/docs",
+            "redoc documentationurl ": "/api/v1/redoc"
+            
+            }

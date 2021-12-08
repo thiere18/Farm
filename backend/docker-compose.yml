@@ -1,33 +1,37 @@
-version: "3"
+version: "3.8"
+
 services:
-  api:
+
+  db:
+    container_name: postgresql_db
+    image: postgres
+    restart: always
+    ports:
+      - 5431:5431
+    environment:
+      - POSTGRES_USER=DB_USER
+      - POSTGRES_PASSWORD=DB_PASSWORD
+      - POSTGRES_DB=DB_NAME
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=PGADMIN_PASSWORD
+    ports:
+      - 5050:80
+    depends_on:
+      - db
+
+  app:
+    container_name: app
     build: .
+    command: bash -c "alembic upgrade head && uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
+    volumes:
+      - .:/app
     ports:
       - 8000:8000
-    volumes:
-      - ./:/usr/src/app
-    # env_file:
-    #     - ./.env
-    environment:
-      - DATABASE_HOSTNAME=postgres
-      - DATABASE_PORT=5432
-      - DATABASE_PASSWORD=password123
-      - DATABASE_NAME=fastapi
-      - DATABASE_USERNAME=postgres
-      - SECRET_KEY=09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7
-      - ALGORITHM=HS256
-      - ACCESS_TOKEN_EXPIRE_MINUTES=30
-    command: alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     depends_on:
-      - postgres
-
-  postgres:
-    image: postgres
-    environment:
-      - POSTGRES_PASSWORD=password1234
-      - POSTGRES_DB=fastapi
-    volumes:
-      - postgres-db:/var/lib/postgresql/data
-
-volumes:
-  postgres-db:
+      - db
+    restart: always

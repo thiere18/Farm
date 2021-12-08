@@ -10,7 +10,7 @@ from app.schemas import token, user as schemas
 from ..database import get_db
 
 router = APIRouter(
-    prefix="/areas",
+    prefix="/api/v1/areas",
     tags=['Areas']
 )
 

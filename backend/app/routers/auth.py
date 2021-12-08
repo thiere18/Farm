@@ -6,7 +6,7 @@ from .. import database, utils, oauth2
 from app.schemas import user ,token as schemas
 from app.models import users as models
 
-router = APIRouter(tags=['Authentication'])
+router = APIRouter(tags=['Authentication'] , prefix="/api/v1")
 
 
 @router.post('/token', response_model=schemas.Token)
