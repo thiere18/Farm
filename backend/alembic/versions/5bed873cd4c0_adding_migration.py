@@ -21,11 +21,10 @@ def upgrade():
     op.create_table(
         "users",
         sa.Column("id", sa.Integer(), nullable=False),
-        sa.Column("full_name", sa.String(), nullable=True),
+        sa.Column("username", sa.String(), nullable=True),
         sa.Column("email", sa.String(), nullable=True),
         sa.Column("password", sa.String(), nullable=True),
-        sa.Column("is_active", sa.Boolean(), nullable=True),
-        sa.Column("is_superuser", sa.Boolean(), nullable=True),
+        sa.Column("is_superuser", sa.Boolean(), nullable=False ,server_default=sa.text('False')),
         sa.PrimaryKeyConstraint("id"),
     )
    

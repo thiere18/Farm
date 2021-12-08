@@ -8,8 +8,7 @@ from app.models import users as models
 
 def login(user_credentials: OAuth2PasswordRequestForm , db: Session ):
 
-    user = db.query(models.User).filter(
-        models.User.email == user_credentials.username).first()
+    user = db.query(models.User).filter((models.User.email == user_credentials.username) | (models.User.username == user_credentials.username)).first()
 
     if not user:
         raise HTTPException(

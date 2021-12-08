@@ -8,7 +8,7 @@ from app.schemas import token, user as schemas
 from ..database import get_db
 
 router = APIRouter(
-    prefix="/users",
+    prefix="/api/v1/users",
     tags=['Users']
 )
 
