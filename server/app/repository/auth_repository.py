@@ -20,7 +20,10 @@ def login(user_credentials: OAuth2PasswordRequestForm , db: Session ):
 
     # create a token
     # return token
-
-    access_token = oauth2.create_access_token(data={"user_id": user.id})
+    if user.is_superuser:
+        permissions = "admin"
+    else:
+        permissions = "user"
+    access_token = oauth2.create_access_token(data={"user_id": user.id, "permissions": permissions})
 
     return {"access_token": access_token, "token_type": "bearer"}

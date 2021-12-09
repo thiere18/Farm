@@ -74,6 +74,7 @@ def get_all_users(db: Session )->Any:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=" no user for now")
 
+
     return user
 
 def get_me(db: Session , current_user:int)->Any:
