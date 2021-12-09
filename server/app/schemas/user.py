@@ -17,7 +17,7 @@ class UserCreate(BaseModel):
     username: str 
     email: EmailStr
     password: str
-    is_superuser: Optional[bool] = False
+    role_id: int
 
 
 
