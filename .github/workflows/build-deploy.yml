@@ -69,7 +69,7 @@ jobs:
           username: ${{secrets.PROD_USERNAME}}
           password: ${{secrets.PROD_PASSWORD}}
           script: |
-            cd app/src/backend
+            cd app/src/server
             git pull
             echo ${{secrets.PROD_PASSWORD}} | sudo -S systemctl restart api
       # login to our ubuntu
