@@ -1,9 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
-from . import models
-from .database import engine
-from .routers.api import  api_router
+from .routers.api_v1.api import  api_router
 # models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(

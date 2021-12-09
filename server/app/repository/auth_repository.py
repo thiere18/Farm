@@ -1,7 +1,9 @@
 from fastapi import  status, HTTPException
 from fastapi.security.oauth2 import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
-from .. import  utils, oauth2
+
+from app.config import oauth2
+from app.utils import  utils
 from app.models import users as models
 
 
