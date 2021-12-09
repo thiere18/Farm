@@ -29,4 +29,7 @@ app.include_router(api_router)
 
 @app.get("/")
 def root():
-    return {"message": "Hello World",}
+    return {"message": "Hello World",
+            "openapiapi documentation url":"/api/v1/docs",
+            "redoc documentationurl ": "/api/v1/redoc"
+            }
