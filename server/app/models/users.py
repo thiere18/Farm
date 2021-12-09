@@ -1,11 +1,10 @@
 
 
 from sqlalchemy import Boolean, Column, Integer, String
-from sqlalchemy.orm import relationship
 from sqlalchemy.sql.expression import text
 from sqlalchemy.sql.sqltypes import TIMESTAMP
 
-from app.database import Base
+from app.config.database import Base
 
 
 

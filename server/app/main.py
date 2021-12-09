@@ -1,9 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
-from . import models
-from .database import engine
-from .routers.api import  api_router
+from .routers.api_v1.api import  api_router
 # models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
@@ -31,5 +28,5 @@ app.include_router(api_router)
 def root():
     return {"message": "Hello World",
             "openapiapi documentation url":"/api/v1/docs",
-            "redoc documentationurl ": "/api/v1/redoc"
+            "redoc documentation url ": "/api/v1/redoc"
             }

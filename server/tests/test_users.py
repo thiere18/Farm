@@ -2,7 +2,7 @@ from jose import jwt
 import pytest
 from app.schemas import user as userSchemas
 from app.schemas import token as tokenSchemas
-from app.config import settings
+from app.config.config import settings
 base_url = "/api/v1"
 
 def test_root(client):
