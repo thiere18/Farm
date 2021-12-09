@@ -32,5 +32,4 @@ def root():
     return {"message": "Hello World",
             "openapiapi documentation url":"/api/v1/docs",
             "redoc documentationurl ": "/api/v1/redoc"
-            
             }
