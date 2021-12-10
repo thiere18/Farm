@@ -55,7 +55,7 @@ jobs:
       name: production
     steps:
 
-      - name: deploy to ubuntu server
+      - name: deploying to ubuntu server
         uses: appleboy/ssh-action@master
         with:
           host: ${{secrets.PROD_HOST}}
