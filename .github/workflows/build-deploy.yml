@@ -69,11 +69,6 @@ jobs:
           script: |
             git pull
             echo ${{secrets.PROD_PASSWORD}} | sudo -S systemctl restart api
-            cd app/
-            
-            cd app/src/
-            source venv/bin/activate
-            cd src/server && alembic upgrade head 
 
       # login to our ubuntu
       # cd /app/src
