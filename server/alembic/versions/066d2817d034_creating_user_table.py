@@ -24,24 +24,23 @@ def upgrade():
         sa.Column('created_at', sa.TIMESTAMP(timezone=True),
                               server_default=sa.text('now()'), nullable=False),
          sa.Column('user_role', sa.String(), nullable=False),
-        
         sa.PrimaryKeyConstraint("id"),
     )
    
         
-    op.create_table(
-        "roles",
-        sa.Column("id", sa.Integer(), nullable=False),
-        sa.Column("name", sa.String(), nullable=True),
-        sa.Column('created_at', sa.TIMESTAMP(timezone=True),
-                              server_default=sa.text('now()'), nullable=False),
-        sa.PrimaryKeyConstraint("id"),
+    # op.create_table(
+    #     "roles",
+    #     sa.Column("id", sa.Integer(), nullable=False),
+    #     sa.Column("name", sa.String(), nullable=True),
+    #     sa.Column('created_at', sa.TIMESTAMP(timezone=True),
+    #                           server_default=sa.text('now()'), nullable=False),
+    #     sa.PrimaryKeyConstraint("id"),
 
-    )
-    op.create_unique_constraint("name_role", "roles", ["name"])
+    # # )
+    # op.create_unique_constraint("name_role", "roles", ["name"])
 
-    op.create_foreign_key('role_users_fk', source_table="users", referent_table="roles", local_cols=[
-                          'user_role'], remote_cols=['name'], ondelete="CASCADE")
+    # op.create_foreign_key('role_users_fk', source_table="users", referent_table="roles", local_cols=[
+    #                       'user_role'], remote_cols=['name'], ondelete="CASCADE")
 
 
 

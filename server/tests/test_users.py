@@ -3,6 +3,7 @@ from app.schemas import  user as schemas
 from app.schemas import  token as schemaToken
 from app.config.config import settings
 import pytest
+import asyncio
 
 def test_root(client):
     res=client.get('/')
@@ -11,13 +12,15 @@ def test_root(client):
     
 
 def test_create_user(client):
-    res=client.post('/users/',json={"username":"thierno","email":"thierno@gmail.com","password":"thierno"})
-    new_user=schemas.User(**res.json())
+    # role= client.post("/api/v1/roles/",json={"name":"simplooe"})
+    res=client.post(f'{settings.api_prefix}/users/',json={"username":"thierno","email":"thierno@gmail.com","password":"thierno","user_role": "simplooe"})
+    new_user=schemas.UserBase(**res.json())
+    # print(new_user)
+    assert res.status_code ==201
     assert new_user.username=="thierno"
-    assert res.status_code == 201
     
 def test_login_user(test_user,client):
-    res=client.post('/login',data={"username":test_user['email'],"password":test_user['password']})
+    res=client.post(f'{settings.api_prefix}/token',data={"username":test_user['email'],"password":test_user['password']})
     login_res=schemaToken.Token(**res.json())
     payload = jwt.decode(login_res.access_token, settings.secret_key, algorithms=[settings.algorithm])
     id=payload.get('user_id')
@@ -28,11 +31,10 @@ def test_login_user(test_user,client):
 @pytest.mark.parametrize("email, password, status_code",[
     ('user@exampld.com', 'bearer',403),
     (None, 'bearer',422),
-    ('thiere','thierno',200)
+    ('string','string',200)
     
 ])
 def test_incorrect_user(test_user,client,email,password,status_code):
-    res=client.post('/login',data={"username":email, "password":password})
+    res=client.post(f'{settings.api_prefix}/token',data={"username":email, "password":password})
     # assert res.json().get('detail')=="Invalid Credentials"
     assert res.status_code == status_code
-    

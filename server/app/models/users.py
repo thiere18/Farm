@@ -19,8 +19,7 @@ class User(Base):
     password = Column(String, nullable=False)
     created_at = Column(TIMESTAMP(timezone=True),
                         nullable=False, server_default=text('now()'))
-    user_role=Column(String, ForeignKey(
-        "roles.name", ondelete="CASCADE"), nullable=False)
-    role = relationship("Role", back_populates="users")
+    user_role=Column(String, nullable=False)
+    # role = relationship("Role", back_populates="users")
 
     

@@ -11,5 +11,5 @@ api_router.include_router(auth.auth_router)
 api_router.include_router(live.live_router)
 api_router.include_router(user.user_router)
 api_router.include_router(area.area_router)
-api_router.include_router(role.role_router)
+# api_router.include_router(role.role_router)
 

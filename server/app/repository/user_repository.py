@@ -6,7 +6,7 @@ from app.utils import  utils
 from app.models import users as models
 from app.models import roles as modelsRole
 from app.schemas import user as schemas
-from app.schemas import role as roleSchemas
+# from app.schemas import role as roleSchemas
 
 
 
@@ -18,7 +18,7 @@ from app.schemas import role as roleSchemas
 def create_user(user: schemas.UserCreate, db: Session )->Any:
     verify_email_exists=db.query(models.User).filter(models.User.email == user.email).first()
     verify_username_exists=db.query(models.User).filter(models.User.username == user.username).first()
-    verif_role=db.query(modelsRole.Role).filter(modelsRole.Role.name == user.user_role).first()
+    # verif_role=db.query(modelsRole.Role).filter(modelsRole.Role.name == user.user_role).first()
     if verify_email_exists:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT,
                             detail=f"a user with this email already exists"
@@ -27,10 +27,10 @@ def create_user(user: schemas.UserCreate, db: Session )->Any:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT,
                             detail=f"a user with this username already exists"
                             )
-    if verif_role:
-        raise HTTPException(status_code=status.HTTP_409_CONFLICT,
-                            detail =f"role {user.user_role} doesn't exist"
-                            )
+    # if verif_role:
+    #     raise HTTPException(status_code=status.HTTP_409_CONFLICT,
+    #                         detail =f"role {user.user_role} doesn't exist"
+    #                         )
     
     
     """Register new user
