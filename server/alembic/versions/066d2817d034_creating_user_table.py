@@ -23,7 +23,7 @@ def upgrade():
         sa.Column("password", sa.String(), nullable=True),
         sa.Column('created_at', sa.TIMESTAMP(timezone=True),
                               server_default=sa.text('now()'), nullable=False),
-         sa.Column('role_id', sa.Integer(), nullable=False),
+         sa.Column('user_role', sa.String(), nullable=False),
         
         sa.PrimaryKeyConstraint("id"),
     )
@@ -38,9 +38,10 @@ def upgrade():
         sa.PrimaryKeyConstraint("id"),
 
     )
-    
+    op.create_unique_constraint("name_role", "roles", ["name"])
+
     op.create_foreign_key('role_users_fk', source_table="users", referent_table="roles", local_cols=[
-                          'role_id'], remote_cols=['id'], ondelete="CASCADE")
+                          'user_role'], remote_cols=['name'], ondelete="CASCADE")
 
 
 

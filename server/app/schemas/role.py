@@ -1,5 +1,5 @@
 from typing import List, Optional
-from .user import User, UserCreate
+from .user import User, UserCreate,UserOut
 from datetime import datetime
 from pydantic import BaseModel
 
@@ -11,7 +11,7 @@ class RoleOut(BaseModel):
     id: int
     name: str
     created_at: datetime
-    users: List[UserCreate]
+    users: List[UserOut]
     class Config:
         orm_mode = True
         

@@ -17,7 +17,7 @@ class UserCreate(BaseModel):
     username: str 
     email: EmailStr
     password: str
-    role_id: int
+    user_role: str
 
 
 
@@ -40,5 +40,11 @@ class User(UserInDBBase):
 # Additional properties stored in DB
 class UserInDB(UserInDBBase):
     hashed_password: str
-class UserOut():
-    pass
+class UserOut(BaseModel):
+    id:int
+    username: str 
+    email: EmailStr
+    user_role: str
+    
+    class Config:
+        orm_mode = True

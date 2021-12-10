@@ -57,6 +57,17 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     user = db.query(models.User).filter(models.User.id == token.id).first()
 
     return user
+def is_superuser(token: str = Depends(oauth2_scheme), db: Session = Depends(database.get_db)):
+    user=get_current_user(token, db)
+    if not user:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,detail="Unauthorized")
+    user_veri = db.query(models.User).filter((models.User.id == token.id) & (models.User.user_role== "admin")).first()
+    if not user:
+         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                                          detail=f"Not a admin user")
+    return user_veri
+
+
 
 def get_current_active_user(
     current_user: models.User = Depends(get_current_user),

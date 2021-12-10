@@ -18,18 +18,21 @@ role_router = APIRouter(
 def create_user(user: schemas.Role, db: Session = Depends(get_db))->Any:
     return role_repository.create_role(user, db)
 
+@role_router.get('/{id}', response_model=schemas.RoleOut)
+def get_role(id: int, db: Session = Depends(get_db), current_user: int =Depends(oauth2.get_current_user))->Any:
+    return role_repository.get_one_role(id,db)
 
-# @role_router.get('/{id}', response_model=schemas.Role)
-# def get_user(id: int, db: Session = Depends(get_db), current_user: int =Depends(oauth2.get_current_user))->Any:
-#     return role_repository.get_one_user(id,db)
+@role_router.get('/', response_model=List[schemas.RoleOut])
+def get_all_role(db: Session = Depends(get_db),current_user: int =Depends(oauth2.get_current_user))->Any:
+    return role_repository.get_all_role(db)
 
-# @role_router.get('/', response_model=List[schemas.Role])
-# def get_users_all(db: Session = Depends(get_db),current_user: int =Depends(oauth2.get_current_user))->Any:
-#     return role_repository.get_all_users(db)
- 
+@role_router.put('/{id',response_model=schemas.RoleOut, )
+def update_role(role:schemas.RoleUpdate, id:int, db: Session= Depends(get_db),current_user: int = Depends(oauth2.get_current_user))->Any:
+    return role_repository.update_role(role,id,db,current_user)
 
-  
-# update me
-
+@role_router.delete('/{id}', status_code=status.HTTP_204_NO_CONTENT)
+def delete_role(id:int, db: Session = Depends(get_db),current_user: int = Depends(oauth2.get_current_user)):
+    return role_repository.delete_role(id,db,current_user)
+    pass
 
 #

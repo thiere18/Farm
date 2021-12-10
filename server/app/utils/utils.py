@@ -13,8 +13,9 @@ def verify(plain_password, hashed_password):
 
 
 
-def is_active( user: models.User)-> bool:
-    return user.is_active
+# def is_active( user: models.User)-> bool:
+#     return user.is_active
 
-def is_superuser( user: models.User) -> bool:
-    return user.is_superuser
+# def is_superuser( user: models.User) -> bool:
+    
+#     return user.is_superuser
